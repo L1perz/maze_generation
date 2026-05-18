@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RunSettings>
+  <!-- Catch2 adapter -->
+  <Catch2Adapter>
+    <!-- Фильтр для поиска .exe файлов с тестами -->
+    <FilenameFilter>.*[Tt]ests.*\.exe$</FilenameFilter>
+    <Logging>info</Logging>
+  </Catch2Adapter>
+</RunSettings>
