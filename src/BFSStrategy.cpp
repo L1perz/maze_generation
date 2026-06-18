@@ -10,6 +10,7 @@ namespace std {
 }
 
 std::vector<Point> BFSStrategy::findPath(const Maze& maze, Point start, Point end) {
+    if (maze.isWall(start) || maze.isWall(end)) return {};
     if (start == end) return { start };
     std::queue<Point> q;
     std::unordered_map<Point, Point> cameFrom;

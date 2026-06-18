@@ -78,3 +78,23 @@ TEST_CASE("Generator: repeated generation produces different mazes (not identica
             if (maze1.isWall(Point(x, y)) != maze2.isWall(Point(x, y))) same = false;
     REQUIRE_FALSE(same);
 }
+
+TEST_CASE("Generator: easy difficulty has no more walls than hard", "[Generator]") {
+    Maze easy(21, 21);
+    Maze hard(21, 21);
+    Generator gen;
+
+    gen.generatePerfectMaze(easy, Difficulty::Easy);
+    gen.generatePerfectMaze(hard, Difficulty::Hard);
+
+    int easyWalls = 0;
+    int hardWalls = 0;
+    for (int y = 0; y < easy.getHeight(); ++y) {
+        for (int x = 0; x < easy.getWidth(); ++x) {
+            if (easy.isWall(Point(x, y))) easyWalls++;
+            if (hard.isWall(Point(x, y))) hardWalls++;
+        }
+    }
+
+    REQUIRE(easyWalls <= hardWalls);
+}

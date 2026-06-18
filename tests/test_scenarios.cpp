@@ -3,6 +3,8 @@
 #include "Generator.h"
 #include "Solver.h"
 #include "BFSStrategy.h"
+#include "DFSStrategy.h"
+#include "AStarStrategy.h"
 
 TEST_CASE("Scenario 1: Generate perfect maze and verify connectivity", "[Scenario]") {
     Maze maze(21, 21);
@@ -71,4 +73,36 @@ TEST_CASE("Scenario 6: Change maze size and regenerate", "[Scenario]") {
     REQUIRE(maze.getWidth() == 15);
     REQUIRE(maze.getHeight() == 15);
     REQUIRE_FALSE(maze.isWall(Point(0, 0)));
+}
+
+TEST_CASE("Scenario 7: User changes start and finish points", "[Scenario]") {
+    Maze maze(10, 10);
+    maze.setStart(Point(2, 2));
+    maze.setEnd(Point(8, 8));
+
+    Solver solver;
+    solver.setStrategy(std::make_shared<BFSStrategy>());
+    auto path = solver.solve(maze, maze.getStart(), maze.getEnd());
+
+    REQUIRE_FALSE(path.empty());
+    REQUIRE(path.front() == Point(2, 2));
+    REQUIRE(path.back() == Point(8, 8));
+}
+
+TEST_CASE("Scenario 8: User switches search algorithm", "[Scenario]") {
+    Maze maze(10, 10);
+    Solver solver;
+
+    solver.setStrategy(std::make_shared<BFSStrategy>());
+    auto bfsPath = solver.solve(maze, maze.getStart(), maze.getEnd());
+
+    solver.setStrategy(std::make_shared<DFSStrategy>());
+    auto dfsPath = solver.solve(maze, maze.getStart(), maze.getEnd());
+
+    solver.setStrategy(std::make_shared<AStarStrategy>());
+    auto astarPath = solver.solve(maze, maze.getStart(), maze.getEnd());
+
+    REQUIRE_FALSE(bfsPath.empty());
+    REQUIRE_FALSE(dfsPath.empty());
+    REQUIRE_FALSE(astarPath.empty());
 }

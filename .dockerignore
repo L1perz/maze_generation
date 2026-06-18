@@ -1,0 +1,11 @@
+.git
+.vs
+build
+build_vs
+out
+libs/SFML-2.6.1
+*.user
+*.suo
+*.sln
+*.vcxproj*
+*.filters
